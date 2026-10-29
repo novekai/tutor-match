@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Resources;
+
+use App\Models\Subject;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/** @mixin Subject */
+class SubjectResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'slug' => $this->slug,
+            'name' => $this->name,
+            'hint' => $this->hint,
+            'icon' => $this->icon,
+        ];
+    }
+}
