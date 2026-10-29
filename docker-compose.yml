@@ -27,18 +27,10 @@ services:
     environment:
       SERVER_NAME: ":80"
       SERVER_ROOT: /app/backend/public
-    # Pas de port publié : le Caddy du VPS (réseau partagé) fait le HTTPS
-    # et relaie vers tutor-match-app:80. Voir deploy/Caddyfile.snippet.
-    networks:
-      default:
-      proxy:
-        aliases:
-          - tutor-match-app
-
-networks:
-  proxy:
-    external: true
-    name: ${PROXY_NETWORK:-n8n-ajdj_default}
+    # Accès direct en HTTP ; le HTTPS via le Caddy du VPS s'active avec
+    # docker-compose.caddy.yml (voir deploy/Caddyfile.snippet).
+    ports:
+      - "${APP_PORT:-8090}:80"
 
 volumes:
   db-data:

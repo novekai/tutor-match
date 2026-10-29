@@ -1,0 +1,14 @@
+# Branche l'app sur le réseau du Caddy du VPS pour le HTTPS :
+#   docker compose -f docker-compose.yml -f docker-compose.caddy.yml up -d
+services:
+  app:
+    networks:
+      default:
+      proxy:
+        aliases:
+          - tutor-match-app
+
+networks:
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:-n8n-ajdj_default}
