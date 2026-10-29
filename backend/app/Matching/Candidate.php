@@ -28,6 +28,20 @@ final class Candidate
         public readonly Collection $compatibleSlots,
     ) {}
 
+    /**
+     * Aperçu des prochains créneaux compatibles : le premier de chaque plage (date, moment),
+     * pour proposer des choix variés plutôt que 9h00, 9h30, 10h00 le même matin.
+     *
+     * @return Collection<int, Slot>
+     */
+    public function previewSlots(int $limit): Collection
+    {
+        return $this->compatibleSlots
+            ->unique(fn (Slot $slot) => $slot->startsAt->toDateString().'|'.$slot->period)
+            ->take($limit)
+            ->values();
+    }
+
     /** Nombre de couples (jour, moment) demandés pour lesquels le tuteur a au moins un créneau libre. */
     public function coveredSelectionCount(): int
     {

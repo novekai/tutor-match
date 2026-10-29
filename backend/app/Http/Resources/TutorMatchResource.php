@@ -32,8 +32,7 @@ class TutorMatchResource extends JsonResource
             'scoreBreakdown' => $candidate->breakdown,
             'matchReasons' => $candidate->reasons,
             'compatibleSlotsCount' => $candidate->compatibleSlots->count(),
-            'compatibleSlots' => $candidate->compatibleSlots
-                ->take(self::SLOTS_PREVIEW)
+            'compatibleSlots' => $candidate->previewSlots(self::SLOTS_PREVIEW)
                 ->map(fn (Slot $slot) => $slot->toArray($this->selection))
                 ->all(),
         ];
