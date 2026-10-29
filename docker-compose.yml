@@ -1,0 +1,38 @@
+name: tutor-match
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tutor_match
+      POSTGRES_USER: tutor_match
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-tutor_match}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tutor_match -d tutor_match"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: ./docker/php
+    image: tutor-match-php
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    environment:
+      SERVER_NAME: ":80"
+      SERVER_ROOT: /app/backend/public
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tutor-match.rule=Host(`tutor-match.novekai.agency`)
+      - traefik.http.routers.tutor-match.entrypoints=websecure
+      - traefik.http.routers.tutor-match.tls.certresolver=letsencrypt
+      - traefik.http.services.tutor-match.loadbalancer.server.port=80
+
+volumes:
+  db-data:
