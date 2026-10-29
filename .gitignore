@@ -7,3 +7,6 @@ backend/public/index.html
 backend/public/assets/
 .env.docker
 .DS_Store
+backend/public/favicon.svg
+backend/public/icons.svg
+.ready
