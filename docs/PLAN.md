@@ -23,7 +23,7 @@ Méthode : procédure NovekAI (dépôt `methode-de-developpement-novekai`, v1.1)
 | # | Étape | Livrable vérifiable | Dépend de |
 |---|---|---|---|
 | 0 | Cadrage : analyse CdC + méthode, architecture, plan, dépôt GitHub privé | ce document, `ARCHITECTURE.md`, `novekai/tutor-match` | — |
-| 1 | Préparer le VPS : PHP 8.3 + extensions, Composer, PostgreSQL 16, Nginx, Node 20, clé de déploiement GitHub | `php -v`, `psql` OK, Nginx répond | accès SSH |
+| 1 | Préparer le VPS : PHP 8.4 + extensions, Composer, PostgreSQL 16, Nginx, Node 20, clé de déploiement GitHub | `php -v`, `psql` OK, Nginx répond | accès SSH |
 | 2 | Squelette backend Laravel + connexion PostgreSQL + pipeline CI (GitHub Actions : tests sur Postgres) | `php artisan test` vert en CI | 1 |
 | 3 | Modèle de données : migrations (dont contrainte d'exclusion), modèles Eloquent, seeders (12 tuteurs variés, photos, notes) | `migrate:fresh --seed` OK | 2 |
 | 4 | Matching : `SlotGenerator`, filtres stricts, critères de score, `POST /api/match` + tests | tests matching verts | 3 |
