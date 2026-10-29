@@ -1,0 +1,7 @@
+# Bloc à ajouter au Caddyfile du VPS (/docker/n8n-ajdj/Caddyfile), puis :
+#   docker exec n8n-ajdj-caddy-1 caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+# Ajouter tutor-match.novekai.agency à la liste une fois son DNS pointé vers 187.124.218.227.
+tutor-match.187-124-218-227.sslip.io {
+    encode zstd gzip
+    reverse_proxy tutor-match-app:80
+}

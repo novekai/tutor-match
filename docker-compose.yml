@@ -27,12 +27,18 @@ services:
     environment:
       SERVER_NAME: ":80"
       SERVER_ROOT: /app/backend/public
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.tutor-match.rule=Host(`tutor-match.novekai.agency`)
-      - traefik.http.routers.tutor-match.entrypoints=websecure
-      - traefik.http.routers.tutor-match.tls.certresolver=letsencrypt
-      - traefik.http.services.tutor-match.loadbalancer.server.port=80
+    # Pas de port publié : le Caddy du VPS (réseau partagé) fait le HTTPS
+    # et relaie vers tutor-match-app:80. Voir deploy/Caddyfile.snippet.
+    networks:
+      default:
+      proxy:
+        aliases:
+          - tutor-match-app
+
+networks:
+  proxy:
+    external: true
+    name: ${PROXY_NETWORK:-n8n-ajdj_default}
 
 volumes:
   db-data:
